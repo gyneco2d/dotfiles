@@ -57,11 +57,10 @@ export PS1="\[\e[35m\]\n\u \[\e[36m\]\w$PS1_GIT_BRANCH\n\[\e[35m\]>\[\e[0m\] "
 # export PS1='\[\e[35m\]\n\u \[\e[36m\]\w\n\[\033[31m\]$(__git_ps1) \[\e[35m\]>\[\e[0m\] '
 
 
-############ Alias `ls -G` to `ls`. ############
+############ LSCOLORS setting ############
 #                 1234567890123456789ABC
-# export LSCOLORS=exfxcxdxbxegedabagacad  # デフォルト
+# export LSCOLORS=exfxcxdxbxegedabagacad  # default
 export LSCOLORS=exfxcxdxbxegedabagacgx
-alias ls='ls -G'
 
 
 ############ scan-build ############
