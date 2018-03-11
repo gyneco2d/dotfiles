@@ -17,6 +17,16 @@ fi
 
 ############ Prompt settings ############
 # Reference : PROMPTING in bash manual
+function exit-status()
+{
+    code=$?
+    if [ "$code" -eq 0 ]
+    then
+        echo -n "34m( \`･ω･･´)つ [$code]"
+    else
+        echo -n "31m( ´･ω･･\`)つ [$code]"
+    fi
+}
 
 function length()
 {
@@ -35,8 +45,8 @@ then
 else
   export PS1_GIT_BRANCH=
 fi
-# export PS1="\[\e[32;1m\]\u@\H \[\e[33;1m\]\w $PS1_GIT_BRANCH\n\[\e[36;1m\]\t \[\e[0m\]\$ "
-export PS1="\[\e[35m\]\n\u \[\e[36m\]\w$PS1_GIT_BRANCH\n\[\e[35m\]>\[\e[0m\] "
+
+export PS1="\n\[\e[\$(exit-status)\]\n\[\e[35m\]\u \[\e[36m\]\w$PS1_GIT_BRANCH\n\[\e[35m\]> \[\e[0m\]"
 
 ############ Another way ############
 # # These files from `https://github.com/git/git/tree/master/contrib/completion`
