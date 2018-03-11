@@ -22,9 +22,9 @@ function exit-status()
     code=$?
     if [ "$code" -eq 0 ]
     then
-        echo -n "34m( \`･ω･･´)つ [$code]"
+        echo -n "34m( \`･ω ･´)つ [$code]"
     else
-        echo -n "31m( ´･ω･･\`)つ [$code]"
+        echo -n "31m( ´･ω ･\`)つ [$code]"
     fi
 }
 
