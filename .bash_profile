@@ -17,29 +17,11 @@ fi
 
 ############ Prompt settings ############
 # Reference : PROMPTING in bash manual
-function save-exit-code()
-{
-    exit_code=$?
-    if [ -f ~/.exit_code ]
-    then
-        content=`cat ~/.exit_code`
-        if [ $content -ge 0 -a $content -le 255 ]
-        then
-            echo -n $exit_code > ~/.exit_code
-        else
-            echo '[ERROR] There is content that is not `Exit Code` in the `.exit_code` file.'
-            exit 1
-        fi
-    else
-        touch ~/.exit_code
-        echo -n $exit_code > ~/.exit_code
-    fi
-}
+export PROMPT_COMMAND="export EXIT_CODE=\$?"
 
 function exit-code-color()
 {
-    read code < ~/.exit_code
-    if [ $code -eq 0 ]
+    if [ $EXIT_CODE -eq 0 ]
     then
         echo -n '46'
     else
@@ -49,12 +31,11 @@ function exit-code-color()
 
 function exit-code-emoticon()
 {
-    read code < ~/.exit_code
-    if [ $code -eq 0 ]
+    if [ $EXIT_CODE -eq 0 ]
     then
-        echo -n "(\`･ω ･´)b [$code]"
+        echo -n "(\`･ω ･´)b [$EXIT_CODE]"
     else
-        echo -n "(´･ω ･\`)p [$code]"
+        echo -n "(´･ω ･\`)p [$EXIT_CODE]"
     fi
 }
 
@@ -76,7 +57,7 @@ else
   export PS1_GIT_BRANCH=
 fi
 
-export PS1="\$(save-exit-code)\n\[\e[35m\]\u \[\e[36m\]\w$PS1_GIT_BRANCH\n\[\e[0m\e[\$(exit-code-color)m\]\$(exit-code-emoticon)\[\e[0m\] \[\e[34m\]❯\[\e[35m\]❯\[\e[36m\]❯ \[\e[0m\]"
+export PS1="\n\[\e[35m\]\u \[\e[36m\]\w$PS1_GIT_BRANCH\n\[\e[0m\e[\$(exit-code-color)m\]\$(exit-code-emoticon)\[\e[0m\] \[\e[34m\]❯\[\e[35m\]❯\[\e[36m\]❯ \[\e[0m\]"
 
 ############ Another way ############
 # # These files from `https://github.com/git/git/tree/master/contrib/completion`
@@ -116,5 +97,4 @@ export ANT_OPTS="-Dfile.encoding=UTF-8 -Xmx512m -Xss256k"
 
 ############ composer setting ############
 export PATH="$PATH:~/.composer/vendor/bin"
-
 
