@@ -57,16 +57,18 @@ else
   export PS1_GIT_BRANCH=
 fi
 
-export PS1="\n\[\e[35m\]\u \[\e[36m\]\w$PS1_GIT_BRANCH\n\[\e[0m\e[\$(exit-code-color)m\]\$(exit-code-emoticon)\[\e[0m\] \[\e[34m\]❯\[\e[35m\]❯\[\e[36m\]❯ \[\e[0m\]"
+export PS1="\n\[\e[35m\]\u \[\e[36m\]\w$PS1_GIT_BRANCH\n\[\e[\$(exit-code-color)m\]\$(exit-code-emoticon)\[\e[0m\] \[\e[34m\]❯\[\e[35m\]❯\[\e[36m\]❯\[\e[0m\] "
 
-############ Another way ############
-# # These files from `https://github.com/git/git/tree/master/contrib/completion`
-# if [ -f /usr/local/git/contrib/completion/git-prompt.sh ] ; then
-#     source /usr/local/git/contrib/completion/git-prompt.sh
-# fi
-# if [ -f /usr/local/git/contrib/completion/git-completion.bash ] ; then
-#     source /usr/local/git/contrib/completion/git-completion.bash
-# fi
+############ Git completion ############
+# These files from `https://github.com/git/git/tree/master/contrib/completion`
+if [ -f /usr/local/git/contrib/completion/git-prompt.sh ] ; then
+    source /usr/local/git/contrib/completion/git-prompt.sh
+fi
+if [ -f /usr/local/git/contrib/completion/git-completion.bash ] ; then
+    source /usr/local/git/contrib/completion/git-completion.bash
+fi
+
+##### Another way to display current branch name #####
 # # changes not staged for commit => show `*`
 # # changes to be commited => show `+`
 # GIT_PS1_SHOWDIRTYSTATE=true
@@ -78,7 +80,7 @@ export PS1="\n\[\e[35m\]\u \[\e[36m\]\w$PS1_GIT_BRANCH\n\[\e[0m\e[\$(exit-code-c
 # export PS1='\[\e[35m\]\n\u \[\e[36m\]\w\n\[\033[31m\]$(__git_ps1) \[\e[35m\]>\[\e[0m\] '
 
 
-############ LSCOLORS setting ############
+############ LSCOLORS ############
 #                 1234567890123456789ABC
 # export LSCOLORS=exfxcxdxbxegedabagacad  # default
 export LSCOLORS=exfxcxdxbxegedabagacgx
@@ -88,13 +90,14 @@ export LSCOLORS=exfxcxdxbxegedabagacgx
 PATH=$PATH:/usr/local/checker/bin
 
 
-############ ant setting ############
+############ Apache Ant ############
 export _JAVA_OPTIONS="-Dfile.encoding=UTF-8"
 export ANT_HOME="/usr/local/ant"
 PATH=$PATH:$ANT_HOME/bin
 export ANT_OPTS="-Dfile.encoding=UTF-8 -Xmx512m -Xss256k"
+export JAVA_HOME=`/usr/libexec/java_home -v "1.8"`
 
 
-############ composer setting ############
+############ Composer ############
 export PATH="$PATH:~/.composer/vendor/bin"
 
