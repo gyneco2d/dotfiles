@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+
+# ANSI Color code
+# http://ascii-table.com/ansi-escape-sequences.php
+
+### Set easily callable variables for colors ###
+if tput setaf 1 &> /dev/null; then
+  # reset ⤴
+  tput sgr0
+  bold=$(tput bold)
+  default=$(tput sgr0)
+  ### Basic colors ###
+  black=$(tput setaf 0)
+  red=$(tput setaf 1)
+  green=$(tput setaf 2)
+  yellow=$(tput setaf 3)
+  blue=$(tput setaf 4)
+  magenta=$(tput setaf 5)
+  cyan=$(tput setaf 6)
+  white=$(tput setaf 7)
+else
+  bold=''
+  default='\e[0m'
+  ### Basic colors ###
+  black='\e[0;30m'
+  red='\e[0;31m'
+  green='\e[0;32m'
+  yellow='\e[0;33m'
+  blue='\e[0;34m'
+  magenta='\e[0;35m'
+  cyan='\e[0;36m'
+  white='\e[0;37m'
+fi
+
+### Prompt symbols ###
+# fish like symbol
+# prompt_symbol='\[${blue}\]❯\[${magenta}\]❯\[${cyan}\]❯\[${default}\]'
+
+# default
+prompt_symbol='\[${magenta}\]$'
+
+### Exit status ###
+# Save exit status
+export PROMPT_COMMAND="export EXIT_STATUS=\$?"
+
+# Set color & symbol according to exit status
+function exit_status_color()
+{
+  if [ $EXIT_STATUS -eq 0 ]; then
+    echo -n '32'
+  else
+    echo -n '31'
+  fi
+}
+
+function exit_status_symbol()
+{
+  if [ $EXIT_STATUS -eq 0 ]; then
+    echo -n "✔ [$EXIT_STATUS]"
+  else
+    echo -n "✖ [$EXIT_STATUS]"
+  fi
+}
+
+### Git branchname ###
+function length()
+{
+  echo -n ${#1}
+}
+
+function init_git_branch()
+{
+  git symbolic-ref HEAD 2>/dev/null >/dev/null &&
+  echo "$(git symbolic-ref HEAD 2>/dev/null | sed 's/^refs\/heads\///')"
+}
+
+if which git 2>/dev/null >/dev/null; then
+  # move cursor
+  GIT_BRANCH='\[\e[$[COLUMNS]D\]'
+  GIT_BRANCH+='\[\e[$[COLUMNS-$(length $(init_git_branch))]C\]'
+  # branch name
+  GIT_BRANCH+='\[${green}\]$(init_git_branch)'
+  # reset cursor & color
+  GIT_BRANCH+='\[\e[$[COLUMNS]D\]\[${default}\]'
+  export GIT_BRANCH
+else
+  export GIT_BRANCH=
+fi
+
+### Set PS1 ###
+PS1="\n\[${magenta}\]\u "
+PS1+="\[${cyan}\]\w"
+PS1+="$GIT_BRANCH"
+PS1+="\n"
+PS1+="\[\e[\$(exit_status_color)m\]\$(exit_status_symbol) "
+PS1+="$prompt_symbol \[${default}\]"
+
+export PS1

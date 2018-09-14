@@ -4,8 +4,8 @@
 !/.gitignore
 !/.bash_profile
 !/.bashrc
+!/.bash_prompt
 !/.vim
 !/.vimrc
 !/.gvimrc
 !/.hyper.js
-
