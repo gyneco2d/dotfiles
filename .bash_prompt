@@ -39,6 +39,13 @@ fi
 # default
 prompt_symbol='\[${magenta}\]$'
 
+### Highlight the user name when logged in as root ###
+if [[ $UID -eq 0 ]]; then
+  userStyle="${red}"
+else
+  userStyle="${magenta}"
+fi
+
 ### Exit status ###
 # Save exit status
 export PROMPT_COMMAND="export EXIT_STATUS=\$?"
@@ -88,7 +95,7 @@ else
 fi
 
 ### Set PS1 ###
-PS1="\n\[${magenta}\]\u "
+PS1="\n\[${userStyle}\]\u "
 PS1+="\[${cyan}\]\w"
 PS1+="$GIT_BRANCH"
 PS1+="\n"
