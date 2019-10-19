@@ -1,0 +1,11 @@
+# Load and run colors
+autoload -Uz colors
+colors
+
+symbol="%{$fg[magenta]%}%%"
+
+PROMPT="
+%{$fg[magenta]%}%n %{$fg[cyan]%}%~
+"
+PROMPT+="%(?.%{$fg[green]%}✔ [%?].%{$fg[red]%}✖ [%?]) "
+PROMPT+="$symbol%{$reset_color%} "
